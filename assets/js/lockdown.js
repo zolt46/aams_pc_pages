@@ -410,6 +410,14 @@ export function getLockdownState() {
   return cloneState();
 }
 
+export async function requestLockdownRelease({ requireConfirm = true } = {}) {
+  if (requireConfirm && !confirmRelease()) {
+    return false;
+  }
+  await releaseLockdown();
+  return true;
+}
+
 // 초기 상태 동기화
 fetchState();
 ensurePolling();
